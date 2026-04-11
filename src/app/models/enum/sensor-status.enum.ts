@@ -1,0 +1,5 @@
+export enum SensorStatus {
+    ONLINE = 'ONLINE',
+    OFFLINE = 'OFFLINE',
+    CALIBRATIONNEEDED = 'CALIBRATIONNEEDED'
+}

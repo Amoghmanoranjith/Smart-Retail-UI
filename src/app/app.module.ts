@@ -8,13 +8,15 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FormsModule } from '@angular/forms';
 import { CommonDashboardComponent } from './components/dashboard/common-dashboard/common-dashboard.component';
+import { ApplyStoreManagerComponent } from './components/storeManager/apply-store-manager/apply-store-manager.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    CommonDashboardComponent
+    CommonDashboardComponent,
+    ApplyStoreManagerComponent
   ],
   imports: [
     BrowserModule,
