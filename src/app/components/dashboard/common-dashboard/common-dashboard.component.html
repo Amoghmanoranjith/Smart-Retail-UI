@@ -1,0 +1,93 @@
+<div *ngIf="!isLoading; else loadingTemplate" class="dashboard-container">
+
+  <h2>Select Your Portal</h2>
+
+  <div class="cards">
+
+    <!-- STORE Manager -->
+    <div class="card">
+      <h3>Store Manager</h3>
+      <p>Manage store inventory</p>
+
+      <ng-container [ngSwitch]="getRoleStatus('STOREMANAGER')">
+
+        <button *ngSwitchCase="'NOT_ASSIGNED'" (click)="goToPortal('STOREMANAGER')">
+          Register
+        </button>
+
+        <span *ngSwitchCase="'PENDING'" style="color: orange;">
+          Pending
+        </span>
+
+        <span *ngSwitchCase="'ACTIVE'" style="color: green;">
+          Active
+        </span>
+
+        <span *ngSwitchCase="'INACTIVE'" style="color: red;">
+          Inactive
+        </span>
+
+      </ng-container>
+    </div>
+
+    <!-- WAREHOUSEOPERATOR -->
+    <div class="card">
+      <h3>Warehouse Operator</h3>
+      <p>Handle warehouse operations</p>
+
+      <ng-container [ngSwitch]="getRoleStatus('WAREHOUSEOPERATOR')">
+
+        <button *ngSwitchCase="'NOT_ASSIGNED'" (click)="goToPortal('WAREHOUSEOPERATOR')">
+          Register
+        </button>
+
+        <span *ngSwitchCase="'PENDING'" style="color: orange;">
+          Pending
+        </span>
+
+        <span *ngSwitchCase="'ACTIVE'" style="color: green;">
+          Active
+        </span>
+
+        <span *ngSwitchCase="'INACTIVE'" style="color: red;">
+          Inactive
+        </span>
+
+      </ng-container>
+    </div>
+
+    <!-- ADMIN -->
+    <div class="card">
+      <h3>Admin</h3>
+      <p>Approve requests & manage system</p>
+
+      <ng-container [ngSwitch]="getRoleStatus('ADMIN')">
+
+        <button *ngSwitchCase="'NOT_ASSIGNED'" (click)="goToPortal('ADMIN')">
+          Register
+        </button>
+
+        <span *ngSwitchCase="'PENDING'" style="color: orange;">
+          Pending
+        </span>
+
+        <span *ngSwitchCase="'ACTIVE'" style="color: green;">
+          Active
+        </span>
+
+        <span *ngSwitchCase="'INACTIVE'" style="color: red;">
+          Inactive
+        </span>
+
+      </ng-container>
+    </div>
+
+  </div>
+
+</div>
+
+<ng-template #loadingTemplate>
+  <p>Loading dashboard...</p>
+</ng-template>
+
+<p>isLoading: {{ isLoading }}</p>

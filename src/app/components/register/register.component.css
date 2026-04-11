@@ -1,0 +1,56 @@
+.register-container {
+  height: 100vh;
+  background: linear-gradient(to right, #0f766e, #115e59);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-card {
+  width: 400px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+}
+
+.header {
+  background: #0f766e;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+.form-group {
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group input {
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.btn {
+  width: 90%;
+  margin: 15px auto;
+  display: block;
+  padding: 10px;
+  background: #0f766e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #115e59;
+}
+
+.login-link {
+  text-align: center;
+  padding-bottom: 15px;
+}
