@@ -2,6 +2,27 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.0.
 
+`
+# install and use Node 22.11
+nvm install 22.11.0
+nvm use 22.11.0
+
+# create Angular 15.2 project
+npx @angular/cli@15.2.0 new my-app
+cd my-app
+
+# force TypeScript 5.9.3
+npm install typescript@5.9.3 --save-dev
+
+# install dependencies
+npm install
+
+# verify
+node -v
+npx ng version
+npx tsc -v
+`
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
