@@ -1,27 +1,43 @@
 # SmartRetail
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.0.
+---
 
-`
-# install and use Node 22.11
+## Setup Instructions
+
+### 1. Install and use Node.js 22.11
+
+```bash
 nvm install 22.11.0
 nvm use 22.11.0
+```
 
-# create Angular 15.2 project
-npx @angular/cli@15.2.0 new my-app
-cd my-app
+---
 
-# force TypeScript 5.9.3
-npm install typescript@5.9.3 --save-dev
+### 2. Set compatible TypeScript version
 
-# install dependencies
+```bash
+npm install typescript@4.9.5 --save-dev
+```
+
+---
+
+### 3. Install dependencies
+
+```bash
 npm install
+```
 
-# verify
+---
+
+### 4. Verify setup
+
+```bash
 node -v
 npx ng version
 npx tsc -v
-`
+```
+
 
 ## Development server
 
