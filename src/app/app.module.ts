@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonDashboardComponent } from './components/dashboard/common-dashboard/common-dashboard.component';
 import { ApplyStoreManagerComponent } from './components/storeManager/apply-store-manager/apply-store-manager.component';
 
@@ -22,7 +22,8 @@ import { ApplyStoreManagerComponent } from './components/storeManager/apply-stor
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

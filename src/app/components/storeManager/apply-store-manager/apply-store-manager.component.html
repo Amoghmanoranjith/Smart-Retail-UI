@@ -1,1 +1,163 @@
-<p>apply-store-manager works!</p>
+<div class="register-container">
+  <div class="register-card">
+
+    <div class="header">
+      <h2>Register Store</h2>
+    </div>
+
+    <form [formGroup]="storeForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <label for="storeName">Store Name</label>
+        <input type="text" id="storeName" formControlName="storeName">
+        <div *ngIf="storeForm.get('storeName')?.invalid && storeForm.get('storeName')?.touched"
+             class="field-error">Store name is required.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="location">Location</label>
+        <select id="location" formControlName="location">
+          <option value="">Select City</option>
+          <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+        </select>
+        <div *ngIf="storeForm.get('location')?.invalid && storeForm.get('location')?.touched"
+             class="field-error">Location is required.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="type">Store tier</label>
+        <select id="type" formControlName="type">
+          <option value="">Select tier</option>
+          <option *ngFor="let opt of storeTierOptions" [value]="opt.value">{{ opt.label }}</option>
+        </select>
+        <div *ngIf="storeForm.get('type')?.invalid && storeForm.get('type')?.touched"
+             class="field-error">Store tier is required.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="size">Size (sq ft)</label>
+        <input type="number" id="size" formControlName="size">
+        <div *ngIf="storeForm.get('size')?.invalid && storeForm.get('size')?.touched"
+             class="field-error">Size must be at least 1.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="numberOfAisles">Number of Aisles</label>
+        <input type="number" id="numberOfAisles" formControlName="numberOfAisles">
+        <div *ngIf="storeForm.get('numberOfAisles')?.invalid && storeForm.get('numberOfAisles')?.touched"
+             class="field-error">Must have at least 1 aisle.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="operatingHours">Operating Hours</label>
+        <input type="text" id="operatingHours" formControlName="operatingHours"
+               placeholder="e.g. 9:00 AM – 10:00 PM">
+        <div *ngIf="storeForm.get('operatingHours')?.invalid && storeForm.get('operatingHours')?.touched"
+             class="field-error">Operating hours are required.</div>
+      </div>
+
+      <h3 class="section-title">Shelves</h3>
+      <div formArrayName="shelves">
+        <div *ngFor="let shelf of shelves.controls; let i = index"
+             [formGroupName]="i"
+             class="shelf-block">
+          <h4>Shelf {{ i + 1 }}</h4>
+
+          <div class="form-group">
+            <label>Aisle Number</label>
+            <input type="number" formControlName="aisleNumber">
+            <div *ngIf="shelf.get('aisleNumber')?.invalid && shelf.get('aisleNumber')?.touched"
+                 class="field-error">Aisle number must be at least 1.</div>
+          </div>
+
+          <div class="form-group">
+            <label>Shelf Section</label>
+            <input type="text" formControlName="shelfSection">
+            <div *ngIf="shelf.get('shelfSection')?.invalid && shelf.get('shelfSection')?.touched"
+                 class="field-error">Shelf section is required.</div>
+          </div>
+
+          <div class="form-group">
+            <label>Shelf Capacity</label>
+            <input type="number" formControlName="shelfCapacity">
+            <div *ngIf="shelf.get('shelfCapacity')?.invalid && shelf.get('shelfCapacity')?.touched"
+                 class="field-error">Capacity must be at least 1.</div>
+          </div>
+
+          <div class="form-group">
+            <label>Expiry Date</label>
+            <input type="date" formControlName="expiryDate">
+            <div *ngIf="shelf.get('expiryDate')?.errors?.['required'] && shelf.get('expiryDate')?.touched"
+                 class="field-error">Expiry date is required.</div>
+            <div *ngIf="shelf.get('expiryDate')?.errors?.['notFutureDate'] && shelf.get('expiryDate')?.touched"
+                 class="field-error">Expiry date must be after today.</div>
+          </div>
+
+          <div class="form-group">
+            <label>Product</label>
+            <select formControlName="productId">
+              <option value="">Select Product</option>
+              <option *ngFor="let product of products" [value]="product.productId">
+                {{ product.productName }} — {{ product.categoryName }}
+              </option>
+            </select>
+            <div *ngIf="shelf.get('productId')?.invalid && shelf.get('productId')?.touched"
+                 class="field-error">Product is required.</div>
+          </div>
+
+          <h5 class="subsection-title">Sensor Details</h5>
+          <div formGroupName="sensor">
+
+            <div class="form-group">
+              <label>Sensor Status</label>
+              <select formControlName="sensorStatus">
+                <option value="">Select Status</option>
+                <option *ngFor="let status of sensorStatuses" [value]="status">{{ status }}</option>
+              </select>
+              <div *ngIf="shelf.get('sensor')?.get('sensorStatus')?.invalid && shelf.get('sensor')?.get('sensorStatus')?.touched"
+                   class="field-error">Sensor status is required.</div>
+            </div>
+
+            <div class="form-group">
+              <label>Sensor Level</label>
+              <select formControlName="sensorLevel">
+                <option value="">Select Level</option>
+                <option *ngFor="let level of sensorLevels" [value]="level">{{ level }}</option>
+              </select>
+              <div *ngIf="shelf.get('sensor')?.get('sensorLevel')?.invalid && shelf.get('sensor')?.get('sensorLevel')?.touched"
+                   class="field-error">Sensor level is required.</div>
+            </div>
+
+            <div class="form-group">
+              <label>Quantity</label>
+              <input type="number" formControlName="quantity">
+              <div *ngIf="shelf.get('sensor')?.get('quantity')?.errors?.['min'] && shelf.get('sensor')?.get('quantity')?.touched"
+                   class="field-error">Quantity cannot be negative.</div>
+              <div *ngIf="shelf.errors?.['quantityExceedsCapacity'] && shelf.get('sensor')?.get('quantity')?.touched"
+                   class="field-error">Quantity cannot exceed shelf capacity.</div>
+            </div>
+
+          </div>
+
+          <button type="button" class="btn btn-danger" (click)="removeShelf(i)">Remove Shelf</button>
+
+        </div>
+      </div>
+
+      <div class="actions-row">
+        <button type="button" class="btn btn-secondary btn-block"
+                [disabled]="!validateShelves()"
+                (click)="addShelf()">
+          Add Shelf
+        </button>
+
+        <button type="submit" class="btn btn-block"
+                [disabled]="!storeForm.valid">
+          Register Store
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

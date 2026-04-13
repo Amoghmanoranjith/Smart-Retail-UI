@@ -11,7 +11,7 @@
 
       <ng-container [ngSwitch]="getRoleStatus('STOREMANAGER')">
 
-        <button *ngSwitchCase="'NOT_ASSIGNED'" (click)="goToPortal('STOREMANAGER')">
+        <button *ngSwitchCase="'NOT_ASSIGNED'" routerLink="/apply-store-manager">
           Register
         </button>
 
