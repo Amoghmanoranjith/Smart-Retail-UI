@@ -1,0 +1,92 @@
+<div class="dashboard-page">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-icon">🛒</span>
+      <span class="brand-text">SmartRetail</span>
+    </div>
+    <nav class="top-links">
+      <a href="javascript:void(0)">Home</a>
+      <a href="javascript:void(0)">Store Portal</a>
+      <a href="javascript:void(0)">Warehouse Portal</a>
+      <a href="javascript:void(0)">Admin Portal</a>
+      <a href="javascript:void(0)">Account</a>
+    </nav>
+  </header>
+
+  <main class="dashboard-content">
+    <h1>Welcome to Your Store Dashboard</h1>
+
+    <section class="overview-grid">
+      <aside class="quick-actions">
+        <button
+          type="button"
+          class="action-btn"
+          *ngFor="let action of quickActions; let i = index"
+          [class.active]="i === 0"
+        >
+          {{ action }}
+        </button>
+      </aside>
+
+      <div class="stat-cards">
+        <article class="stat-card">
+          <h3>Stock Status</h3>
+          <p>12 items below minimum threshold.</p>
+          <button type="button">View Stock</button>
+        </article>
+        <article class="stat-card">
+          <h3>Pending Reorders</h3>
+          <p>5 reorder suggestions need approval.</p>
+          <button type="button">Review</button>
+        </article>
+        <article class="stat-card">
+          <h3>Expiring Soon</h3>
+          <p>23 products expiring within 7 days.</p>
+          <button type="button">View Items</button>
+        </article>
+        <article class="stat-card">
+          <h3>Sales Trend</h3>
+          <p>Revenue up 8.3% this week.</p>
+          <button type="button">View Trends</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="profile-panel">
+      <h2>Store Profile Management</h2>
+
+      <form [formGroup]="dashboardForm" (ngSubmit)="onUpdateProfile()">
+        <div class="form-grid">
+          <div formGroupName="store">
+            <h3>Store Information</h3>
+
+            <label for="storeName">Store Name</label>
+            <input id="storeName" type="text" formControlName="storeName" />
+
+            <label for="location">Location</label>
+            <input id="location" type="text" formControlName="location" />
+
+            <label for="type">Store Type</label>
+            <input id="type" type="text" formControlName="type" />
+
+            <label for="operatingHours">Operating Hours</label>
+            <input id="operatingHours" type="text" formControlName="operatingHours" />
+
+            <div class="split">
+              <div>
+                <label for="size">Size (sq ft)</label>
+                <input id="size" type="number" formControlName="size" />
+              </div>
+              <div>
+                <label for="numberOfAisles">Aisles</label>
+                <input id="numberOfAisles" type="number" formControlName="numberOfAisles" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="submit-btn" type="submit">Update Profile</button>
+      </form>
+    </section>
+  </main>
+</div>

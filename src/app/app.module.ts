@@ -9,6 +9,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonDashboardComponent } from './components/dashboard/common-dashboard/common-dashboard.component';
 import { ApplyStoreManagerComponent } from './components/storeManager/apply-store-manager/apply-store-manager.component';
+import { DashboardComponent } from './components/storeManager/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ApplyStoreManagerComponent } from './components/storeManager/apply-stor
     LoginComponent,
     RegisterComponent,
     CommonDashboardComponent,
-    ApplyStoreManagerComponent
+    ApplyStoreManagerComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

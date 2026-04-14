@@ -26,3 +26,11 @@
 .card:hover {
   transform: scale(1.05);
 }
+
+.clickable-card {
+  cursor: pointer;
+}
+
+.clickable-card button {
+  cursor: pointer;
+}

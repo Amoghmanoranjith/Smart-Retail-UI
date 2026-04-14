@@ -1,0 +1,212 @@
+.dashboard-page {
+  min-height: 100vh;
+  background: #0b775e;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #1f2a2e;
+}
+
+.topbar {
+  background: #ffffff;
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-icon,
+.brand-text {
+  color: #0b9c7a;
+  font-weight: 700;
+}
+
+.brand-text {
+  font-size: 30px;
+}
+
+.top-links {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.top-links a {
+  color: #147f69;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.dashboard-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  color: #ffffff;
+  text-align: center;
+  margin: 10px 0 20px;
+  font-size: 44px;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 18px;
+}
+
+.quick-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.action-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: #ffffff;
+  color: #1f2a2e;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.action-btn.active {
+  background: linear-gradient(90deg, #0b6f9a, #0ca6b4);
+  color: #ffffff;
+}
+
+.stat-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.stat-card {
+  background: #f0f4f5;
+  border-radius: 12px;
+  padding: 24px 16px;
+  text-align: center;
+  min-height: 220px;
+}
+
+.stat-card h3 {
+  margin: 12px 0 8px;
+  font-size: 34px;
+}
+
+.stat-card p {
+  margin-bottom: 18px;
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.stat-card button,
+.submit-btn {
+  border: none;
+  background: #07a388;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.profile-panel {
+  margin-top: 18px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.profile-panel h2 {
+  margin: 0;
+  color: #ffffff;
+  background: linear-gradient(90deg, #057f7c, #0d95cb);
+  padding: 16px 20px;
+  font-size: 34px;
+}
+
+form {
+  background: #f7f9fa;
+  padding: 20px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.form-grid h3 {
+  margin: 0 0 12px;
+  font-size: 29px;
+  color: #1f2a2e;
+}
+
+label {
+  display: block;
+  margin: 10px 0 6px;
+  font-size: 14px;
+  color: #4d5b60;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  height: 44px;
+  border: 1px solid #ced7db;
+  border-radius: 6px;
+  padding: 0 10px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.submit-btn {
+  margin-top: 16px;
+}
+
+@media (max-width: 1100px) {
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .form-grid,
+  .stat-cards,
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-text {
+    font-size: 24px;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  .profile-panel h2 {
+    font-size: 26px;
+  }
+}

@@ -17,7 +17,6 @@ export class CommonDashboardComponent {
   ngOnInit(): void {
     this.userDashBoardService.getRoles().subscribe({
       next: (data) => {
-        console.log(data)
         this.roles = data.data;
         this.isLoading = false;
       },
@@ -36,6 +35,18 @@ export class CommonDashboardComponent {
   getRoleStatus(roleName: string): string | null {
     const role = this.roles.find(r => r.role === roleName);
     return role ? role.status : null;
+  }
+
+  goToStoreManagerPortal(): void {
+    const storeManagerStatus = this.getRoleStatus('STOREMANAGER');
+    if (storeManagerStatus === 'ACTIVE') {
+      this.router.navigate(['/store/dashboard']);
+      return;
+    }
+
+    if (storeManagerStatus === 'NOT_ASSIGNED') {
+      this.router.navigate(['/store/apply']);
+    }
   }
 
   // if the code returned is 403 forbidden then dont show these cards

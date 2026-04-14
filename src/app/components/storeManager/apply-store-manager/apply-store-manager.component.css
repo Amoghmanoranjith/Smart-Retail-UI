@@ -84,16 +84,40 @@ form {
 
 .shelf-block {
   margin: 0 20px 16px;
-  padding: 16px;
+  padding: 0;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   background: #fafafa;
+  overflow: hidden;
 }
 
-.shelf-block h4 {
-  margin: 0 0 12px;
+.shelf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: #effaf8;
+  border-bottom: 1px solid #d1faf2;
+}
+
+.shelf-header h4 {
+  margin: 0;
   font-size: 1rem;
   color: #134e4a;
+}
+
+.shelf-summary {
+  margin: 6px 0 0;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.shelf-toggle {
+  min-width: 130px;
+}
+
+.shelf-details {
+  padding: 16px;
 }
 
 .shelf-block .form-group {

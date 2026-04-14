@@ -17,11 +17,11 @@ function futureDateValidator(control: AbstractControl): ValidationErrors | null 
   return selected > today ? null : { notFutureDate: true };
 }
 
-// ── Cross-field validator: sensor quantity ≤ shelf shelfCapacity ─────────────
+// ── Cross-field validator: sensor quantity ≤ sensor capacity ─────────────
 function quantityWithinCapacityValidator(shelfGroup: AbstractControl): ValidationErrors | null {
-  const capacity = shelfGroup.get('shelfCapacity')?.value ?? 0;
-  const quantity = shelfGroup.get('sensor.quantity') // not available at shelf level
-    ?? (shelfGroup.get('sensor') as FormGroup)?.get('quantity');
+  const sensorGroup = shelfGroup.get('sensor');
+  const capacity = sensorGroup?.get('capacity')?.value ?? 0;
+  const quantity = sensorGroup?.get('quantity');
   if (quantity == null) return null;
   return quantity.value <= capacity ? null : { quantityExceedsCapacity: true };
 }
@@ -38,6 +38,7 @@ export class ApplyStoreManagerComponent implements OnInit {
   sensorLevels  = Object.values(SensorLevel);
   sensorStatuses = Object.values(SensorStatus);
   readonly storeTierOptions = STORE_TIER_OPTIONS;
+  shelfExpanded: boolean[] = [];
 
   // ── Hardcoded Indian cities ──────────────────────────────────────────────
   readonly cities: string[] = [
@@ -99,31 +100,36 @@ export class ApplyStoreManagerComponent implements OnInit {
   addShelf(): void {
     const shelfGroup = this.fb.group(
       {
-        aisleNumber:   [1, [Validators.required, Validators.min(1)]],
-        shelfSection:  ['1',   Validators.required],
-        shelfCapacity: [10, [Validators.required, Validators.min(1), Validators.max(200)]],
-        expiryDate:    [new Date(),   [Validators.required, futureDateValidator]],
-        productId:     [1, Validators.required],
+        aisleNumber:  [1, [Validators.required, Validators.min(1)]],
+        shelfSection: ['A', Validators.required],
         sensor: this.fb.group({
-          sensorStatus: [SensorStatus.ONLINE, Validators.required],
-          sensorLevel:  [SensorLevel.MEDIUM, Validators.required],
-          quantity:     [5,  [Validators.required, Validators.min(0)]]
+          sensorStatus:      [SensorStatus.ONLINE, Validators.required],
+          quantity:          [5, [Validators.required, Validators.min(0)]],
+          capacity:          [10, [Validators.required, Validators.min(1), Validators.max(200)]],
+          productExpiryDate: [new Date(), [Validators.required, futureDateValidator]],
+          productId:         [1, Validators.required]
         })
       },
-      { validators: quantityWithinCapacityValidator } 
+      { validators: quantityWithinCapacityValidator }
     );
 
-    // Re-run the cross-field validator whenever shelfCapacity changes
-    shelfGroup.get('shelfCapacity')?.valueChanges.subscribe(() => {
-      shelfGroup.get('sensor.quantity')?.updateValueAndValidity();
+    // Re-run the cross-field validator whenever sensor capacity changes
+    shelfGroup.get('sensor')?.get('capacity')?.valueChanges.subscribe(() => {
+      shelfGroup.get('sensor')?.get('quantity')?.updateValueAndValidity();
       shelfGroup.updateValueAndValidity();
     });
 
     this.shelves.push(shelfGroup);
+    this.shelfExpanded.push(true);
   }
 
   removeShelf(index: number): void {
     this.shelves.removeAt(index);
+    this.shelfExpanded.splice(index, 1);
+  }
+
+  toggleShelf(index: number): void {
+    this.shelfExpanded[index] = !this.shelfExpanded[index];
   }
 
   private formatExpiryDate(dateValue: string | Date): string {
@@ -146,10 +152,13 @@ export class ApplyStoreManagerComponent implements OnInit {
         shelves: formValue.shelves.map((shelf: any) => ({
           aisleNumber: shelf.aisleNumber,
           shelfSection: shelf.shelfSection,
-          shelfCapacity: shelf.shelfCapacity,
-          expiryDate: this.formatExpiryDate(shelf.expiryDate),
-          productDTO: this.products.find(p => p.productId ===  shelf.productId), // convert shelf.productId to number
-          sensorDTO:  shelf.sensor
+          sensorDTO: {
+            sensorStatus: shelf.sensor.sensorStatus,
+            quantity: shelf.sensor.quantity,
+            capacity: shelf.sensor.capacity,
+            productExpiryDate: this.formatExpiryDate(shelf.sensor.productExpiryDate),
+            productDTO: this.products.find(p => p.productId === shelf.sensor.productId)
+          }
         }))
       };
       console.log(storeData); //****************************************** logging

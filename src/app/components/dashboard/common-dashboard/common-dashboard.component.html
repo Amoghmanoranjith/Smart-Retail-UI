@@ -5,14 +5,13 @@
   <div class="cards">
 
     <!-- STORE Manager -->
-    <div class="card">
+    <div class="card clickable-card" (click)="goToStoreManagerPortal()">
       <h3>Store Manager</h3>
       <p>Manage store inventory</p>
 
       <ng-container [ngSwitch]="getRoleStatus('STOREMANAGER')">
-
-        <button *ngSwitchCase="'NOT_ASSIGNED'" routerLink="/apply-store-manager">
-          Register
+        <button *ngSwitchCase="'NOT_ASSIGNED'" type="button">
+          Apply
         </button>
 
         <span *ngSwitchCase="'PENDING'" style="color: orange;">
@@ -38,7 +37,7 @@
       <ng-container [ngSwitch]="getRoleStatus('WAREHOUSEOPERATOR')">
 
         <button *ngSwitchCase="'NOT_ASSIGNED'" (click)="goToPortal('WAREHOUSEOPERATOR')">
-          Register
+          Apply
         </button>
 
         <span *ngSwitchCase="'PENDING'" style="color: orange;">
@@ -64,7 +63,7 @@
       <ng-container [ngSwitch]="getRoleStatus('ADMIN')">
 
         <button *ngSwitchCase="'NOT_ASSIGNED'" (click)="goToPortal('ADMIN')">
-          Register
+          Apply
         </button>
 
         <span *ngSwitchCase="'PENDING'" style="color: orange;">

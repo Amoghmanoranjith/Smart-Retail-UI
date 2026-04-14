@@ -61,86 +61,91 @@
         <div *ngFor="let shelf of shelves.controls; let i = index"
              [formGroupName]="i"
              class="shelf-block">
-          <h4>Shelf {{ i + 1 }}</h4>
-
-          <div class="form-group">
-            <label>Aisle Number</label>
-            <input type="number" formControlName="aisleNumber">
-            <div *ngIf="shelf.get('aisleNumber')?.invalid && shelf.get('aisleNumber')?.touched"
-                 class="field-error">Aisle number must be at least 1.</div>
+          <div class="shelf-header">
+            <div>
+              <h4>Shelf {{ i + 1 }}</h4>
+              <p class="shelf-summary" *ngIf="!shelfExpanded[i]">
+                Aisle {{ shelf.get('aisleNumber')?.value || '-' }},
+                Section {{ shelf.get('shelfSection')?.value || '-' }},
+                Status {{ shelf.get('sensor')?.get('sensorStatus')?.value || '-'}},
+                Qty {{ shelf.get('sensor')?.get('quantity')?.value ?? '-' }} / Cap {{ shelf.get('sensor')?.get('capacity')?.value ?? '-' }}
+              </p>
+            </div>
+            <button type="button" class="btn btn-secondary shelf-toggle"
+                    (click)="toggleShelf(i)">
+              {{ shelfExpanded[i] ? 'Hide details' : 'Show details' }}
+            </button>
           </div>
 
-          <div class="form-group">
-            <label>Shelf Section</label>
-            <input type="text" formControlName="shelfSection">
-            <div *ngIf="shelf.get('shelfSection')?.invalid && shelf.get('shelfSection')?.touched"
-                 class="field-error">Shelf section is required.</div>
-          </div>
-
-          <div class="form-group">
-            <label>Shelf Capacity</label>
-            <input type="number" formControlName="shelfCapacity">
-            <div *ngIf="shelf.get('shelfCapacity')?.invalid && shelf.get('shelfCapacity')?.touched"
-                 class="field-error">Capacity must be at least 1.</div>
-          </div>
-
-          <div class="form-group">
-            <label>Expiry Date</label>
-            <input type="date" formControlName="expiryDate">
-            <div *ngIf="shelf.get('expiryDate')?.errors?.['required'] && shelf.get('expiryDate')?.touched"
-                 class="field-error">Expiry date is required.</div>
-            <div *ngIf="shelf.get('expiryDate')?.errors?.['notFutureDate'] && shelf.get('expiryDate')?.touched"
-                 class="field-error">Expiry date must be after today.</div>
-          </div>
-
-          <div class="form-group">
-            <label>Product</label>
-            <select formControlName="productId">
-              <option value="">Select Product</option>
-              <option *ngFor="let product of products" [value]="product.productId">
-                {{ product.productName }} — {{ product.categoryName }}
-              </option>
-            </select>
-            <div *ngIf="shelf.get('productId')?.invalid && shelf.get('productId')?.touched"
-                 class="field-error">Product is required.</div>
-          </div>
-
-          <h5 class="subsection-title">Sensor Details</h5>
-          <div formGroupName="sensor">
-
+          <div *ngIf="shelfExpanded[i]" class="shelf-details">
             <div class="form-group">
-              <label>Sensor Status</label>
-              <select formControlName="sensorStatus">
-                <option value="">Select Status</option>
-                <option *ngFor="let status of sensorStatuses" [value]="status">{{ status }}</option>
-              </select>
-              <div *ngIf="shelf.get('sensor')?.get('sensorStatus')?.invalid && shelf.get('sensor')?.get('sensorStatus')?.touched"
-                   class="field-error">Sensor status is required.</div>
+              <label>Aisle Number</label>
+              <input type="number" formControlName="aisleNumber">
+              <div *ngIf="shelf.get('aisleNumber')?.invalid && shelf.get('aisleNumber')?.touched"
+                   class="field-error">Aisle number must be at least 1.</div>
             </div>
 
             <div class="form-group">
-              <label>Sensor Level</label>
-              <select formControlName="sensorLevel">
-                <option value="">Select Level</option>
-                <option *ngFor="let level of sensorLevels" [value]="level">{{ level }}</option>
-              </select>
-              <div *ngIf="shelf.get('sensor')?.get('sensorLevel')?.invalid && shelf.get('sensor')?.get('sensorLevel')?.touched"
-                   class="field-error">Sensor level is required.</div>
+              <label>Shelf Section</label>
+              <input type="text" formControlName="shelfSection">
+              <div *ngIf="shelf.get('shelfSection')?.invalid && shelf.get('shelfSection')?.touched"
+                   class="field-error">Shelf section is required.</div>
             </div>
 
-            <div class="form-group">
-              <label>Quantity</label>
-              <input type="number" formControlName="quantity">
-              <div *ngIf="shelf.get('sensor')?.get('quantity')?.errors?.['min'] && shelf.get('sensor')?.get('quantity')?.touched"
-                   class="field-error">Quantity cannot be negative.</div>
-              <div *ngIf="shelf.errors?.['quantityExceedsCapacity'] && shelf.get('sensor')?.get('quantity')?.touched"
-                   class="field-error">Quantity cannot exceed shelf capacity.</div>
+            <h5 class="subsection-title">Sensor Details</h5>
+            <div formGroupName="sensor">
+
+              <div class="form-group">
+                <label>Sensor Status</label>
+                <select formControlName="sensorStatus">
+                  <option value="">Select Status</option>
+                  <option *ngFor="let status of sensorStatuses" [value]="status">{{ status }}</option>
+                </select>
+                <div *ngIf="shelf.get('sensor')?.get('sensorStatus')?.invalid && shelf.get('sensor')?.get('sensorStatus')?.touched"
+                     class="field-error">Sensor status is required.</div>
+              </div>
+
+              <div class="form-group">
+                <label>Quantity</label>
+                <input type="number" formControlName="quantity">
+                <div *ngIf="shelf.get('sensor')?.get('quantity')?.errors?.['min'] && shelf.get('sensor')?.get('quantity')?.touched"
+                     class="field-error">Quantity cannot be negative.</div>
+                <div *ngIf="shelf.errors?.['quantityExceedsCapacity'] && shelf.get('sensor')?.get('quantity')?.touched"
+                     class="field-error">Quantity cannot exceed sensor capacity.</div>
+              </div>
+
+              <div class="form-group">
+                <label>Capacity</label>
+                <input type="number" formControlName="capacity">
+                <div *ngIf="shelf.get('sensor')?.get('capacity')?.invalid && shelf.get('sensor')?.get('capacity')?.touched"
+                     class="field-error">Capacity must be between 1 and 200.</div>
+              </div>
+
+              <div class="form-group">
+                <label>Expiry Date</label>
+                <input type="date" formControlName="productExpiryDate">
+                <div *ngIf="shelf.get('sensor')?.get('productExpiryDate')?.errors?.['required'] && shelf.get('sensor')?.get('productExpiryDate')?.touched"
+                     class="field-error">Expiry date is required.</div>
+                <div *ngIf="shelf.get('sensor')?.get('productExpiryDate')?.errors?.['notFutureDate'] && shelf.get('sensor')?.get('productExpiryDate')?.touched"
+                     class="field-error">Expiry date must be after today.</div>
+              </div>
+
+              <div class="form-group">
+                <label>Product</label>
+                <select formControlName="productId">
+                  <option value="">Select Product</option>
+                  <option *ngFor="let product of products" [value]="product.productId">
+                    {{ product.productName }} — {{ product.categoryName }}
+                  </option>
+                </select>
+                <div *ngIf="shelf.get('sensor')?.get('productId')?.invalid && shelf.get('sensor')?.get('productId')?.touched"
+                     class="field-error">Product is required.</div>
+              </div>
+
             </div>
 
+            <button type="button" class="btn btn-danger" (click)="removeShelf(i)">Remove Shelf</button>
           </div>
-
-          <button type="button" class="btn btn-danger" (click)="removeShelf(i)">Remove Shelf</button>
-
         </div>
       </div>
 
